@@ -1,0 +1,8 @@
+.DS_Store
+*.swp
+*.swo
+*.swm
+*.swn
+localenv
+*.egg-info
+*.pyc
