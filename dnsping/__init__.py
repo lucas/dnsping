@@ -55,7 +55,3 @@ if not config:
     subdomain = config.get('digitalocean', 'subdomain')
   else:
     raise Exception('Unable to run, either i or t,d,s must be set')
-
-if __name__ == '__main__':
-  dc = DnsChecker(token, domain, subdomain)
-  dc.run()
