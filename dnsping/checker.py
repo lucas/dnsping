@@ -44,7 +44,7 @@ class DnsChecker(object):
     # get current DNS record
     record = self.get_record()
 
-    if not self.record:
+    if not record:
       print 'Creating record pointing %s to %s' % (self.full_domain, self.ip)
       create_a_record()
       print 'Done!'
