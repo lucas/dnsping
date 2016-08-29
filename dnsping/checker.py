@@ -30,7 +30,7 @@ class DnsChecker(object):
 
     return None
 
-  def create_a_record():
+  def create_a_record(self):
     r = Record(domain_name=self.domain, token=self.token)
     r.type = 'A'
     r.data = self.ip
@@ -46,7 +46,7 @@ class DnsChecker(object):
 
     if not record:
       print 'Creating record pointing %s to %s' % (self.full_domain, self.ip)
-      create_a_record()
+      self.create_a_record()
       print 'Done!'
     else:
       if record.data != self.ip:
