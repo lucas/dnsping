@@ -25,7 +25,8 @@ class DnsChecker(object):
     do_d = Domain(token=self.token, name=self.domain)
 
     # loop records looking for the right one
-    for record in do_d.get_records():
+    params = {"per_page": 200}
+    for record in do_d.get_records(params):
       if record.name != self.subdomain:
         continue
       return record
@@ -37,7 +38,8 @@ class DnsChecker(object):
 
     num = 0
     # loop records, destroy any duplicates with same name
-    for record in do_d.get_records():
+    params = {"per_page": 200}
+    for record in do_d.get_records(params):
       if record.id == real_id or record.name != self.subdomain:
         continue
       record.destroy()
@@ -59,11 +61,6 @@ class DnsChecker(object):
     # get current DNS record
     record = self.get_record()
 
-    if self.del_dupes:
-      # remove any duplicate records
-      num = self.delete_duplicates(record.name, record.id)
-      print(f'Destroyed {num} duplicates that were found for {record.name}')
-
     if not record:
       print(f'Creating record pointing {self.full_domain} to {self.ip}')
       self.create_a_record()
@@ -76,3 +73,9 @@ class DnsChecker(object):
         print('Done!')
       else:
         print('No update needed')
+
+      if self.del_dupes:
+        # remove any duplicate records
+        num = self.delete_duplicates(record.name, record.id)
+        print(f'Destroyed {num} duplicates that were found for {record.name}')
+
