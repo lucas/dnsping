@@ -13,7 +13,7 @@ setup(
     author_email='',
     url='',
     install_requires=[
-      'python-digitalocean==1.9.0',
+      'python-digitalocean==1.16.0',
     ],
     zip_safe=False,
     entry_points="""

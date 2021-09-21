@@ -1,5 +1,5 @@
 # standard libs
-import ConfigParser
+import configparser
 import argparse
 import os.path
 
@@ -9,6 +9,7 @@ config = None
 token = None
 domain = None
 subdomain = None
+del_dupes = False
 
 if not config:
   # get command line options
@@ -32,6 +33,13 @@ if not config:
   )
 
   parser.add_argument(
+    '-x',
+    default=None,
+    dest='deldupes',
+    help='Destroy any duplicate records',
+  )
+
+  parser.add_argument(
     '-i',
     dest='ini',
     default='config.ini',
@@ -44,14 +52,16 @@ if not config:
     token = options.token
     domain = options.domain
     subdomain = options.subdomain
+    del_dupes = options.deldupes
   elif os.path.isfile(options.ini):
     # read config
-    config = ConfigParser.ConfigParser()
+    config = configparser.ConfigParser()
     config.read(options.ini)
 
     # digital ocean
     token = config.get('digitalocean', 'key')
     domain = config.get('digitalocean', 'domain')
     subdomain = config.get('digitalocean', 'subdomain')
+    del_dupes = config.get('digitalocean', 'deldupes')
   else:
     raise Exception('Unable to run, either i or t,d,s must be set')
